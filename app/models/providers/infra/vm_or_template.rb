@@ -1,5 +1,5 @@
 module Providers
-  class VmOrTemplate < ApplicationRecord
+  class Infra::VmOrTemplate < ApplicationRecord
     include NewWithTypeStiMixin
 
     self.table_name = "providers_vms"
