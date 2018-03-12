@@ -1,6 +1,4 @@
-require 'foreman_providers/infra/engine'
+require 'foreman_providers_infra/engine'
 
-module ForemanProviders
-  module Infra
-  end
+module ForemanProvidersInfra
 end

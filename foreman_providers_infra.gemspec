@@ -1,8 +1,8 @@
-require File.expand_path('../lib/foreman_providers/infra/version', __FILE__)
+require File.expand_path('../lib/foreman_providers_infra/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'foreman_providers_infra'
-  s.version     = ForemanProviders::Infra::VERSION
+  s.version     = ForemanProvidersInfra::VERSION
   s.license     = 'GPL-3.0'
   s.authors     = ['Adam Grare', 'Ladislav Smola', 'James Wong']
   s.email       = ['agrare@redhat.com', 'lsmola@redhat.com', 'jwong@redhat.com']
