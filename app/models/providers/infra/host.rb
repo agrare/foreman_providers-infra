@@ -23,5 +23,22 @@ module Providers
 
     alias_attribute     :state,   :power_state
     alias_attribute     :to_s,    :name
+
+    def self.post_refresh_ems(ems_id, update_start_time)
+      update_start_time = update_start_time.utc
+      ems = ExtManagementSystem.find(ems_id)
+
+      # Collect the newly added Hosts
+      added_hosts = ems.hosts.where("created_on >= ?", update_start_time)
+
+      unless added_hosts.empty?
+        added_hosts.each do |host|
+          host_opts = {
+            :name => host.name
+          }
+          ::Host::Managed.create!(host_opts)
+        end
+      end
+    end
   end
 end

@@ -26,5 +26,18 @@ module Providers
 
     belongs_to                :host
     belongs_to                :ext_management_system, :foreign_key => "ems_id"
+
+    def self.post_refresh_ems(ems_id, update_start_time)
+      update_start_time = update_start_time.utc
+      ems = ExtManagementSystem.find(ems_id)
+
+      # Collect the newly added VMs
+      added_vms = ems.vms_and_templates.where("created_on >= ?", update_start_time)
+
+      unless added_vms.empty?
+        added_vms.each do |vm|
+        end
+      end
+    end
   end
 end
