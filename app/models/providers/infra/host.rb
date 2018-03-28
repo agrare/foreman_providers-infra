@@ -17,7 +17,7 @@ module Providers
     validates_inclusion_of    :vmm_vendor, :in => VENDOR_TYPES.keys
 
     belongs_to :ext_management_system, :foreign_key => "ems_id"
-    has_many   :vms_and_templates, :dependent => :nullify
+    has_many   :vms_and_templates, :dependent => :nullify, :class_name => "Providers::Infra::VmOrTemplate"
     has_many   :vms, :inverse_of => :host
     has_many   :templates, :inverse_of => :host
 

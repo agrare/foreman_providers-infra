@@ -27,6 +27,7 @@ module Providers
     belongs_to                :host
     belongs_to                :ext_management_system, :foreign_key => "ems_id"
 
+    has_one                   :operating_system, :dependent => :destroy
     has_one                   :hardware, :dependent => :destroy
     has_many                  :disks, :through => :hardware
 
@@ -39,6 +40,10 @@ module Providers
 
       unless added_vms.empty?
         added_vms.each do |vm|
+          net = vm.hardware.networks.detect { |net| net.ipaddress }
+          next if net.nil?
+
+          Host::Managed.create!(:name => net.ipaddress)
         end
       end
     end
