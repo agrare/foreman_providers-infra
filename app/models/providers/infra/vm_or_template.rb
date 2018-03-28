@@ -27,6 +27,9 @@ module Providers
     belongs_to                :host
     belongs_to                :ext_management_system, :foreign_key => "ems_id"
 
+    has_one                   :hardware, :dependent => :destroy
+    has_many                  :disks, :through => :hardware
+
     def self.post_refresh_ems(ems_id, update_start_time)
       update_start_time = update_start_time.utc
       ems = ExtManagementSystem.find(ems_id)

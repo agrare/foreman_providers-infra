@@ -43,7 +43,30 @@ class AddInfraProviderTables < ActiveRecord::Migration[5.1]
       t.index ["hostname"], name: "index_hosts_on_hostname", using: :btree
       t.index ["ipaddress"], name: "index_hosts_on_ipaddress", using: :btree
     end
+<<<<<<< Updated upstream
 
+    create_table "providers_networks", id: :bigserial, force: :cascade do |t|
+      t.bigint   "hardware_id"
+      t.bigint   "device_id"
+      t.string   "description"
+      t.string   "guid"
+      t.boolean  "dhcp_enabled"
+      t.string   "ipaddress"
+      t.string   "subnet_mask"
+      t.datetime "lease_obtained"
+      t.datetime "lease_expires"
+      t.string   "default_gateway"
+      t.string   "dhcp_server"
+      t.string   "dns_server"
+      t.string   "hostname"
+      t.string   "domain"
+      t.string   "ipv6address"
+      t.index ["device_id"], name: "index_networks_on_device_id", using: :btree
+      t.index ["hardware_id"], name: "index_networks_on_hardware_id", using: :btree
+    end
+
+=======
+>>>>>>> Stashed changes
     create_table "providers_vms", id: :bigserial, force: :cascade do |t|
       t.string   "vendor"
       t.string   "format"
@@ -137,6 +160,10 @@ class AddInfraProviderTables < ActiveRecord::Migration[5.1]
 
   def down
     drop_table "providers_hosts"
+<<<<<<< Updated upstream
+    drop_table "providers_networks"
+=======
+>>>>>>> Stashed changes
     drop_table "providers_vms"
   end
 end
