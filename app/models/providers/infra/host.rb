@@ -21,6 +21,10 @@ module Providers
     has_many   :vms, :inverse_of => :host
     has_many   :templates, :inverse_of => :host
 
+    def disconnects
+      vms_and_templates
+    end
+
     alias_attribute     :state,   :power_state
     alias_attribute     :to_s,    :name
 
