@@ -5,6 +5,8 @@ module Providers
 
     self.table_name = "providers_vms"
 
+    scoped_search on: [:name, :location]
+
     VENDOR_TYPES = {
       # DB            Displayed
       "azure"     => "Azure",

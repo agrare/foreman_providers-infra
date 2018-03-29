@@ -3,6 +3,8 @@ module Providers
     include NewWithTypeStiMixin
     extend ForemanProviders::Logging
 
+    scoped_search on: [:name, :power_state]
+
     VENDOR_TYPES = {
       # DB            Displayed
       "microsoft"       => "Microsoft",
