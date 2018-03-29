@@ -7,5 +7,6 @@ module Providers::Infra::Associations
              :class_name => "Providers::Infra::VmOrTemplate", :inverse_of => :ext_management_system
     has_many :templates, :foreign_key => :ems_id, :inverse_of => :ext_management_system
     has_many :vms,       :foreign_key => :ems_id, :inverse_of => :ext_management_system
+    has_many :hardwares, :through => :vms_and_templates
   end
 end
