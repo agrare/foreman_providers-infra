@@ -15,6 +15,11 @@ module ForemanProvidersInfra
     end
 
     initializer 'foreman_providers_infra.register_plugin', :before => :finisher_hook do |_app|
+      require 'extensions/descendant_loader'
+
+      # make sure STI models are recognized
+      DescendantLoader.instance.descendants_paths << config.root.join('app')
+
       Foreman::Plugin.register :foreman_providers_infra do
         requires_foreman '>= 1.4'
 
