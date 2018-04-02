@@ -1,6 +1,7 @@
 module Providers
   class Infra::VmOrTemplate < ApplicationRecord
     include NewWithTypeStiMixin
+    extend ForemanProviders::Logging
 
     self.table_name = "providers_vms"
 
@@ -42,8 +43,11 @@ module Providers
         added_vms.each do |vm|
           net = vm.hardware.networks.detect { |net| net.ipaddress }
           next if net.nil?
-
-          Host::Managed.create!(:name => net.ipaddress)
+          begin
+            Host::Managed.create!(:name => net.ipaddress)
+          rescue => err
+            _log.error("Error creating Host::Managed: :name =>#{net.ipaddress} (vm.name=#{vm.name}). Reason:<#{err}>")
+          end
         end
       end
     end
