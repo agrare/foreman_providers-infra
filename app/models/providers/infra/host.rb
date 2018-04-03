@@ -1,6 +1,7 @@
 module Providers
   class Infra::Host < ApplicationRecord
     include NewWithTypeStiMixin
+    extend ForemanProviders::Logging
 
     VENDOR_TYPES = {
       # DB            Displayed
@@ -36,7 +37,11 @@ module Providers
           host_opts = {
             :name => host.name
           }
-          ::Host::Managed.create!(host_opts)
+          begin
+            ::Host::Managed.create!(host_opts)
+          rescue => err
+            _log.error("Error creating Host::Managed: :name =>#{host.name}. Reason:<#{err}>")
+          end
         end
       end
     end
