@@ -32,6 +32,29 @@ module Providers
     has_one                   :hardware, :dependent => :destroy
     has_many                  :disks, :through => :hardware
 
+    def state
+      (power_state || "unknown").downcase
+    end
+    alias_method :current_state, :state
+
+    # Override raw_power_state= attribute setter in order to impose side effects
+    # of setting previous_state and updating state_changed_on
+    def raw_power_state=(new_state)
+      return unless new_state
+
+      unless raw_power_state == new_state
+        self.previous_state   = raw_power_state
+        self.state_changed_on = Time.now.utc
+        super
+        self.power_state      = calculate_power_state
+      end
+      new_state
+    end
+
+    def self.calculate_power_state(raw_power_state)
+      (raw_power_state == "never") ? "never" : "unknown"
+    end
+
     def self.post_refresh_ems(ems_id, update_start_time)
       update_start_time = update_start_time.utc
       ems = ExtManagementSystem.find(ems_id)
@@ -50,6 +73,16 @@ module Providers
           end
         end
       end
+    end
+
+    private
+
+    def power_state=(new_power_state)
+      super
+    end
+
+    def calculate_power_state
+      self.class.calculate_power_state(raw_power_state)
     end
   end
 end
