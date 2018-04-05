@@ -1,7 +1,10 @@
+require 'deface'
+
 module ForemanProvidersInfra
   class Engine < ::Rails::Engine
     engine_name 'foreman_providers_infra'
 
+    config.autoload_paths += Dir["#{config.root}/app/controllers"]
     config.autoload_paths += Dir["#{config.root}/app/controllers/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/helpers/concerns"]
     config.autoload_paths += Dir["#{config.root}/app/models/concerns"]

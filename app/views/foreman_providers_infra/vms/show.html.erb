@@ -1,0 +1,21 @@
+<% title(@vm.name) %>
+
+<div class="row" id="about">
+    <div class="col-md-5">
+        <div id="properties">
+            <%= render partial: 'foreman_providers_infra/vms/properties', locals: {vm: @vm} %>
+        </div>
+
+        <div id="disks">
+            <%= render partial: 'foreman_providers_infra/common/disks', locals: {disks: @vm.disks} %>
+        </div>
+
+    </div>
+
+
+    <div class="col-md-5">
+        <div id="power">
+            <%= render partial: 'foreman_providers_infra/common/power', locals: {obj: @vm} %>
+        </div>
+    </div>
+</div>
